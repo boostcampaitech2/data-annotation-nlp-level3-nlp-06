@@ -11,7 +11,7 @@ from load_data import *
 
 def klue_re_micro_f1(preds, labels):
     """KLUE-RE micro f1 (except no_relation)"""
-    label_list = ['no_relation', '기술 : 개발일', '기술 : 정의', '기술 : 하위 기술','기술 : 개발_단체', '인물 : 개발_기술','인물 : 출판물', '서비스 : 출시 주체', '서비스 : 출시일', '서비스 : 기반 기술']
+    label_list = ['no_relation', '기술:개발일', '기술:정의', '기술:하위기술','기술:개발단체', '인물:개발기술','인물:출판물', '서비스:출시주체', '서비스:출시일', '서비스:기반기술']
     no_relation_label_idx = label_list.index("no_relation")
     label_indices = list(range(len(label_list)))
     label_indices.remove(no_relation_label_idx)
@@ -48,6 +48,7 @@ def compute_metrics(pred):
 
 def label_to_num(label):
   num_label = []
+# 필요시 label to num.pkl파일을 만들면 됩니다. no_relation : 1 
   with open('dict_label_to_num_creation.pkl', 'rb') as f:
     dict_label_to_num = pickle.load(f)
   for v in label:
