@@ -9,17 +9,17 @@ from sklearn.metrics import accuracy_score
 
 def klue_re_micro_f1(preds, labels, average):
     """KLUE-RE micro f1 (except no_relation)"""
-    label_list = ['no_relation', '기술 : 개발일', '기술 : 정의', '기술 : 하위 기술','기술 : 개발_단체', '인물 : 개발_기술','인물 : 출판물', '서비스 : 출시 주체', '서비스 : 출시일', '서비스 : 기반 기술']
+    label_list = ['no_relation', '기술:개발일', '기술:정의', '기술:하위기술','기술:개발단체', '인물:개발기술','인물:출판물', '서비스:출시주체', '서비스:출시일', '서비스:기반기술']
     no_relation_label_idx = label_list.index("no_relation")
     label_indices = list(range(len(label_list)))
     label_indices.remove(no_relation_label_idx)
     return sklearn.metrics.f1_score(labels, preds, average="micro", labels=label_indices) * 100.0
 
 def klue_re_auprc(probs, labels):
-    labels = np.eye(30)[labels]
+    labels = np.eye(10)[labels]
 
-    score = np.zeros((30,))
-    for c in range(30):
+    score = np.zeros((10,))
+    for c in range(10):
         targets_c = labels.take([c], axis=1).ravel()
         preds_c = probs.take([c], axis=1).ravel()
         precision, recall, _ = sklearn.metrics.precision_recall_curve(targets_c, preds_c)
@@ -29,7 +29,7 @@ def klue_re_auprc(probs, labels):
 def label_to_num(label):
   num_label = []
 
-  dict_label_to_num = {'no_relation': 0, 'org:top_members/employees': 1, 'org:members': 2, 'org:product': 3, 'per:title': 4, 'org:alternate_names': 5, 'per:employee_of': 6, 'org:place_of_headquarters': 7, 'per:product': 8, 'org:number_of_employees/members': 9, 'per:children': 10, 'per:place_of_residence': 11, 'per:alternate_names': 12, 'per:other_family': 13, 'per:colleagues': 14, 'per:origin': 15, 'per:siblings': 16, 'per:spouse': 17, 'org:founded': 18, 'org:political/religious_affiliation': 19, 'org:member_of': 20, 'per:parents': 21, 'org:dissolved': 22, 'per:schools_attended': 23, 'per:date_of_death': 24, 'per:date_of_birth': 25, 'per:place_of_birth': 26, 'per:place_of_death': 27, 'org:founded_by': 28, 'per:religion': 29}
+  dict_label_to_num = {'no_relation':0, '기술:개발일':1, '기술:정의':2, '기술:하위기술':3,'기술:개발단체':4, '인물:개발기술':5,'인물:출판물':6, '서비스:출시주체':7, '서비스:출시일':8, '서비스:기반기술':9}
   for v in label:
     num_label.append(dict_label_to_num[v])
   
