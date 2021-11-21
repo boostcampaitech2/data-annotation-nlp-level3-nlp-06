@@ -19,19 +19,19 @@ for idx in range(ANNOTATOR_NUM):
     raw_data[key] = []
     for row in datasets[1:]: # head 제외하고 value 값이 있는 row 부터 시작
         
-        # labeling하지 않은 부분('')은 새로운 숫자로 정의
-        if row[idx+START_COLUMN] == '':
-            raw_data[key].append(11)
-        else:
-            raw_data[key].append(labels[row[idx+START_COLUMN]])
+        # tagging되지 않은 부분('')은 새로운 relation로 정의
+        # if row[idx+START_COLUMN] == '':
+        #     raw_data[key].append(11)
+        # else:
+        #     raw_data[key].append(labels[row[idx+START_COLUMN]])
 
-        # labeling하지 않은 부분('')을 ERROR로 정의
-        if row[idx+START_COLUMN] == '':
-            raw_data[key].append(labels['ERROR'])
-        else:
-            raw_data[key].append(labels[row[idx+START_COLUMN]])
+        # tagging되지 않은 부분('')을 ERROR(no_relation)로 정의
+        # if row[idx+START_COLUMN] == '':
+        #     raw_data[key].append(labels['ERROR'])
+        # else:
+        #     raw_data[key].append(labels[row[idx+START_COLUMN]])
 
-        # labeling하지 않은 부분('')을 ground_truth로 정의
+        # tagging되지 않은 부분('')을 ground_truth로 정의
         if row[idx+START_COLUMN] == '':
             raw_data[key].append(labels[row[GROUND_TRUTH_COLUMN]])
         else:
